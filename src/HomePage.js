@@ -3,11 +3,6 @@ import App from './App'
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import SimpleCard from './Card/SimpleCard'
 import { Typography } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import { useDispatch, useSelector } from 'react-redux';
-import start, { StartProcess, GetForm } from './redux/slice/start'
-import Form from './Form/StartForm.js'
-import { Link } from 'react-router-dom';
 import TaskList from './TaskList';
 
 
@@ -36,32 +31,16 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function HomePage() {
-  const dispatch = useDispatch()
+  const classes = useStyles()
+
+  {/*const dispatch = useDispatch()
   const Data = useSelector((state) => state)
   const formKey = useSelector((state) => state.start.FromKey);
   console.log("formKey bro", formKey);
-  const classes = useStyles()
+  
+*/}
 
 
- 
-  const render = () => {
-    if (Data.start.data && Object.keys(Data.start.data).length > 0) {
-      return (
-        <div>
-          {Object.entries(Data.start.data).map(([key, value]) => (
-            <div key={key}>
-              <span>{key}: </span>
-              <span>{JSON.stringify(value)}</span>
-            </div>
-          ))}
-          <Link to="/startForm" variant="contained" onClick={() => dispatch((GetForm()))}>Click Here To Fill Form!</Link>
-          
-        </div>
-      );
-    } else {
-      return null;
-    }
-  };
 
   return (
     <div className={classes.container} >
@@ -74,8 +53,6 @@ function HomePage() {
           <SimpleCard heading={""} />
         </div>
         <br />
-        <Button variant='contained' onClick={() => dispatch(StartProcess())}>New Contract</Button>
-        {render()}
         <TaskList/>
       </div>
     </div>

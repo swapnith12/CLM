@@ -23,6 +23,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import { Report } from '@material-ui/icons';
 import HelpIcon from '@material-ui/icons/Help';
+import {useHistory} from 'react'
 
 const DrawerWidth = "245px"
 
@@ -147,6 +148,10 @@ const App=()=> {
     handleMobileMenuClose();
   };
 
+  const onClickDashBoard = ()=>{
+
+  }
+
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
@@ -237,6 +242,7 @@ const App=()=> {
           <IconButton
                edge="start"
                className={classes.menuButton}
+               onClick={onClickDashBoard}
                color="inherit"
                aria-label="open drawer"
               >
