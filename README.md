@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### PLEASE USE " npm i --f " to intall dependencies 
+### PLEASE USE " npm i --f " to install dependencies 
 
 ### `npm start`
 
