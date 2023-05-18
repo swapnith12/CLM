@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
@@ -18,6 +18,9 @@ import FormLabel from '@material-ui/core/FormLabel';
 import TextField from '@material-ui/core/TextField';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import PublishIcon from '@material-ui/icons/Publish';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import { StartProcess, setAmountAction, setClientNameAction, setCreateDateAction, setEndingDateAction, setVendorNameAction } from '../redux/slice/start';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,27 +45,43 @@ const useStyles = makeStyles((theme) => ({
   body: {
     display: "flex",
     flexDirection: "row",
-    justifyItems:"space-around"
+    justifyItems: "space-around"
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    marginTop:theme.spacing(2),
+    width: 200,
+  },
+  formCols:{
+    display:'flex',
+    flexDirection:'row',
+    justifyContent:'space-between',
+  },
+  amount:{
+    marginLeft:theme.spacing(2),
+    width:"300px"
   }
 }));
 
 export default function InputAdornments() {
   const formKey = useSelector((state) => state.start.FromKey);
+  const [submitted,setSubmitted] = useState(false)
   const classes = useStyles();
+  const dispatch = useDispatch()
   const [values, setValues] = React.useState({
-    amount: '',
-    password: '',
-    weight: '',
-    weightRange: '',
-    showPassword: false,
+    Client: '',
+    Vendor: '',
+    creation:'',
+    ending:'',
+    Amount:''
   });
+  {/*
   const [value, setValue] = React.useState('MSA');
   const handleChangeRadio = (event) => {
     setValue(event.target.value);
   };
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
+  
 
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
@@ -71,41 +90,129 @@ export default function InputAdornments() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+*/}
 
-  const Form = ()=>{
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+    if (prop === "Client") {
+      dispatch(setClientNameAction({ payload: event.target.value }))
+    } else if (prop === "Vendor") { dispatch(setVendorNameAction({ payload: event.target.value }))
+    } else if (prop === "creation") { dispatch(setCreateDateAction({ payload: event.target.value }))}
+    else if (prop === "ending") { dispatch(setEndingDateAction({ payload: event.target.value }))}
+    else{ dispatch(setAmountAction({ payload: event.target.value }))}
+  };
+
+  const getBody = (values) => {
+    let variables = {}
+    Object.keys(values).forEach((item) => {
+      variables[item] = { 'value': values[item] }
+    });
+    return {
+      'variables': variables,
+      'businessKey': 'CLM'
+    }
+  }
+
+
+  const HandleSubmit = (e) => {
+    e.preventDefault()
+    const valuess = getBody(values)
+    dispatch(StartProcess(valuess))
+    setSubmitted(true)
+  }
+
+  const Form = () => {
     return (
       <div className={classes.root}>
-      <div className={classes.body}>
-        <div className={classes.content}>
-          <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
+        <div className={classes.body}>
+          <div className={classes.content}>
+            <Typography variant='h6'>Please fill all Details to intiate request </Typography>
+            <br />
+            <form >
+              <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
+                <div className={classes.formCols}>
+                <div>
+                <OutlinedInput
+                  id="Client"
+                  name='Client'
+                  value={values.Client}
+                  onChange={handleChange('Client')}
+                  endAdornment={<InputAdornment position="end">Client Name</InputAdornment>}
+                  aria-describedby="outlined-weight-helper-text"
+                  inputProps={{
+                    'aria-label': 'Client Name',
+                  }}
+                  labelWidth={0}
+                />
+                <br />
+                <br/>
+                <OutlinedInput
+                  id="Vendor"
+                  name='Vendor'
+                  value={values.Vendor}
+                  onChange={handleChange('Vendor')}
+                  endAdornment={<InputAdornment position="end">Vendor Name</InputAdornment>}
+                  aria-describedby="outlined-weight-helper-text"
+                  inputProps={{
+                    'aria-label': 'Vendor Name',
+                  }}
+                  labelWidth={0}
+                />
+                <br/>
+                <br/>
+                <TextField
+                  id="creation"
+                  name="creation"
+                  label="contract initiation time"
+                  onChange={handleChange('creation')}
+                  type="datetime-local"
+                  defaultValue="2017-05-24T10:30"
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true,
+                  }} />
+                  <TextField
+                  id="ending"
+                  name="ending"
+                  label="contract End time"
+                  onChange={handleChange('ending')}
+                  type="datetime-local"
+                  defaultValue="2017-05-24T10:30"
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true,
+                  }} />
+                </div>
+                <div>
+                <OutlinedInput
+                  id="Amount"
+                  name='Amount'
+                  value={values.Amount}
+                  onChange={handleChange('Amount')}
+                  className={classes.amount}
+                  endAdornment={<InputAdornment position="end"><AttachMoneyIcon/></InputAdornment>}
+                  aria-describedby="outlined-weight-helper-text"
+                  inputProps={{
+                    'aria-label': 'Amount',
+                  }}
+                  labelWidth={0}
+                />
+                </div>
+                </div>
+                <FormHelperText id="outlined-weight-helper-text">Contract Request</FormHelperText>
 
-            <OutlinedInput
-              id="Client Name"
-              value={values.weight}
-              onChange={handleChange('weight')}
-              endAdornment={<InputAdornment position="end">Client Name</InputAdornment>}
-              aria-describedby="outlined-weight-helper-text"
-              inputProps={{
-                'aria-label': 'Client Name',
-              }}
-              labelWidth={0}
-            />
-            <br/>
-            <OutlinedInput
-              id="Vendor Name"
-              value={values.weight}
-              onChange={handleChange('weight')}
-              endAdornment={<InputAdornment position="end">Vendor Name</InputAdornment>}
-              aria-describedby="outlined-weight-helper-text"
-              inputProps={{
-                'aria-label': 'Vendor Name',
-              }}
-              labelWidth={0}
-            />
-
-            <FormHelperText id="outlined-weight-helper-text">Weight</FormHelperText>
-          </FormControl>
-          {/*<FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
+                <IconButton
+                  edge="start"
+                  className={classes.menuButton}
+                  onClick={HandleSubmit}
+                  color="inherit"
+                  aria-label="open drawer"
+                >
+                  <PublishIcon style={{ height: "30px", width: "20px", }} /><Typography variant="overline">Submit</Typography>
+                </IconButton>
+              </FormControl>
+            </form>
+            {/*<FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
@@ -127,7 +234,7 @@ export default function InputAdornments() {
             labelWidth={70}
           />
           </FormControl>*/}
-          <FormControl fullWidth className={classes.margin} variant="outlined">
+            {/*<FormControl fullWidth className={classes.margin} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
             <OutlinedInput
               id="outlined-adornment-amount"
@@ -180,17 +287,22 @@ export default function InputAdornments() {
               <FormControlLabel value="New" control={<Radio />} label="New" />
               <FormControlLabel value="Existing" control={<Radio />} label="Existing" />
             </RadioGroup>
-          </FormControl>
+          </FormControl> */}
+          </div>
         </div>
       </div>
-    </div>
     )
   }
   const renderForm = () => {
     if (formKey && formKey.key === "StartNewContract") {
+      if(!submitted){
       return Form();
+      }else{return(<>
+      <Typography variant="h4">{values.Client}-Thanks For Choosing Us!</Typography>
+      <Typography variant="h6">We will process your request</Typography>
+      </>)}
     } else {
-      return <Typography>No Form To Load</Typography>;
+      return <Typography variant='h4'>No Form To Load</Typography>;
     }
   };
 

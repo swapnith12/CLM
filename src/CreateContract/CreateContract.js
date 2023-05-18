@@ -22,9 +22,7 @@ function CreateContract() {
     const classes = useStyles()
 
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(StartProcess())
-      }, []);
+
     
     const renderForm=()=>{
         setIsShow(true)

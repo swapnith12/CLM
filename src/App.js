@@ -23,7 +23,8 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import { Report } from '@material-ui/icons';
 import HelpIcon from '@material-ui/icons/Help';
-import {useHistory} from 'react'
+
+import { useNavigate  } from "react-router-dom";
 
 const DrawerWidth = "245px"
 
@@ -129,6 +130,7 @@ const useStyles = makeStyles((theme) => ({
 
 const App=()=> {
   const classes = useStyles();
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -148,8 +150,14 @@ const App=()=> {
     handleMobileMenuClose();
   };
 
+  const onClickContracts = ()=>{
+    navigate("/create")
+  }
   const onClickDashBoard = ()=>{
-
+    navigate("/")
+  }
+  const onClickTasks = ()=>{
+    navigate("/review")
   }
 
   const handleMobileMenuOpen = (event) => {
@@ -251,6 +259,7 @@ const App=()=> {
           <IconButton
                edge="start"
                className={classes.menuButton}
+               onClick={onClickContracts}
                color="inherit"
                aria-label="open drawer"
               >
@@ -259,6 +268,7 @@ const App=()=> {
           <IconButton
                edge="start"
                className={classes.menuButton}
+               onClick={onClickTasks}
                color="inherit"
                aria-label="open drawer"
               >
