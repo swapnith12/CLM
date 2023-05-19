@@ -155,7 +155,7 @@ const HandleSubmit = (e,taskId)=>{
 
             <FormHelperText id="outlined-weight-helper-text">Vendor Review</FormHelperText>
 
-            <button type='submit'>Approove</button>
+            <button type='submit'>Approve</button>
           </FormControl>
           </form>
           {/*<FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">

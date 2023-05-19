@@ -64,6 +64,7 @@ export const setAmountAction = createAction("start/setAmountAction", (payload) =
   return { payload };
 });
 
+
 const start = createSlice({
   name: "start",
   initialState: {

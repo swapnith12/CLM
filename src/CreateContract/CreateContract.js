@@ -6,6 +6,8 @@ import { alpha, makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import Form from '../Form/StartForm'
 import { GetForm, StartProcess } from '../redux/slice/start';
+import Contract from '../Contract';
+import { useNavigate } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,18 +20,19 @@ const useStyles = makeStyles((theme) => ({
 
 
 function CreateContract() {
-    const [isShow,setIsShow] = useState(false)
+    
     const classes = useStyles()
-
+    const navigate = useNavigate()
     const dispatch = useDispatch();
 
     
     const renderForm=()=>{
-        setIsShow(true)
         dispatch(GetForm())
+        navigate("/startform")
     }
   return (
     <div>
+      <Contract/>
       <IconButton
                 edge="end"
                 aria-label="account of current user"
@@ -40,7 +43,7 @@ function CreateContract() {
               >
                 <SupervisedUserCircleIcon style={{height:"30px",width:"20px"}} />&nbsp;<Typography variant="overline">Create New Contact</Typography>
        </IconButton>
-       {isShow?<Form/>:<Typography>Click Above Button To Fill Form!</Typography>}
+       
     </div>
   )
 }
