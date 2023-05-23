@@ -4,7 +4,7 @@ import {
     Routes,
     Route,
   } from 'react-router-dom';
-
+import Login from './Login/Login'
 import HomePage from './HomePage'
 import App from './App'
 import StartForm from './Form/StartForm'
@@ -30,7 +30,8 @@ function Root() {
         <App className={classes.selfContained}/>
         <div>
                 <Routes>
-                    <Route path="/" exact Component={HomePage}/>
+                    <Route path="/Login" exact Component={Login}/>
+                    <Route path='/' exact Component={HomePage}/>
                     <Route path="/startForm" exact Component={StartForm}/>
                     <Route path="/create" exact Component={CreateContract}/>
                     <Route path="/review" exact Component={ReviewTasks}/>
