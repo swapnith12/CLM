@@ -63,6 +63,10 @@ export const setEndingDateAction = createAction("start/setEndingDateAction", (pa
 export const setAmountAction = createAction("start/setAmountAction", (payload) => {
   return { payload };
 });
+export const setAppNo = createAction("start/setAppNo", (payload) => {
+  return { payload };
+});
+
 
 
 const start = createSlice({
@@ -79,6 +83,7 @@ const start = createSlice({
     endingDate: '',
     amount: '',
     taskComplete: '',
+    appNo:null
   },
   extraReducers: (builder) => {
     builder.addCase(StartProcess.pending, (state, action) => {
@@ -130,6 +135,9 @@ const start = createSlice({
     });
     builder.addCase(setAmountAction, (state, action) => {
       state.amount = action.payload;
+    });
+    builder.addCase(setAppNo, (state, action) => {
+      state.appNo = action.payload;
     });
 
     builder.addCase(CompleteTask.pending, (state, action) => {
