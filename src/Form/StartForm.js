@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid grey',
     borderRadius: "10px",
     height: "280px",
-    width: "700px",
+    width: "1050px",
     paddingTop: "15px"
   },
   formrows: {
@@ -256,8 +256,8 @@ export default function InputAdornments() {
                     <br />
                     <div class="ui form">
                       <div class="field">
-                        <label>Country</label>
-                        <select class="ui search dropdown">
+                        
+                        <select  className="ui search dropdown">
                           <option value="">Select Country</option>
                           <option value="AF">Afghanistan</option>
                           <option value="AX">Åland Islands</option>
@@ -511,8 +511,9 @@ export default function InputAdornments() {
                         </select>
                       </div>
                     </div>
-                    <br />
-                    <br />
+                    </div>
+
+                    <div>
                     <OutlinedInput
                       id="City"
                       name='City'
@@ -525,7 +526,8 @@ export default function InputAdornments() {
                       }}
                       labelWidth={0}
                     />
-                  </div>
+                    </div>
+                  
                 </div>
                 <FormHelperText id="outlined-weight-helper-text">Contract Request</FormHelperText>
                 <IconButton
