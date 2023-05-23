@@ -67,6 +67,18 @@ export const setAppNo = createAction("start/setAppNo", (payload) => {
   return { payload };
 });
 
+export const setCountry = createAction("setCountry",(payload)=>{
+  return {payload}
+})
+export const setCity = createAction("setCity",(payload)=>{
+  return {payload}
+})
+export const setRegistrationNumber = createAction("setRegistrationNumber",(payload)=>{
+  return {payload}
+})
+export const setAddress = createAction("setAddress",(payload)=>{
+  return {payload}
+})
 
 
 const start = createSlice({
@@ -83,6 +95,10 @@ const start = createSlice({
     endingDate: '',
     amount: '',
     taskComplete: '',
+    Country:'',
+    City:'',
+    RegistrationNumber:'',
+    Address:'',
     appNo:null
   },
   extraReducers: (builder) => {
@@ -139,6 +155,18 @@ const start = createSlice({
     builder.addCase(setAppNo, (state, action) => {
       state.appNo = action.payload;
     });
+    builder.addCase(setCountry, (state, action) => {
+      state.Country = action.payload;
+    });
+    builder.addCase(setCity, (state, action) => {
+      state.City = action.payload;
+    });
+    builder.addCase(setRegistrationNumber, (state, action) => {
+      state.RegistrationNumber = action.payload;
+    });
+    builder.addCase(setAddress, (state, action) => {
+      state.Address = action.payload;
+    });
 
     builder.addCase(CompleteTask.pending, (state, action) => {
       state.isloading = true;
@@ -151,6 +179,7 @@ const start = createSlice({
       console.log("error", action.payload)
       state.isError = true;
     })
+   
   }
 })
 

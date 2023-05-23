@@ -21,7 +21,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import PublishIcon from '@material-ui/icons/Publish';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import { StartProcess, setAmountAction, setAppNo, setClientNameAction, setCreateDateAction, setEndingDateAction, setSample, setVendorNameAction } from '../redux/slice/start';
+import { StartProcess, setAmountAction, setAppNo, setClientNameAction, setCreateDateAction, setEndingDateAction, setSample, setVendorNameAction,setCountry,setCity,setRegistrationNumber,setAddress } from '../redux/slice/start';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -96,7 +96,12 @@ export default function InputAdornments() {
     creation: '',
     ending: '',
     Amount: '',
-    AppNo: ''
+    AppNo: '',
+    Country:'',
+    City:'',
+    RegistrationNumber:'',
+    Address:''
+
   });
   {/*
   const [value, setValue] = React.useState('MSA');
@@ -150,6 +155,10 @@ export default function InputAdornments() {
       dispatch(setVendorNameAction({ payload: event.target.value }))
     } else if (prop === "creation") { dispatch(setCreateDateAction({ payload: event.target.value })) }
     else if (prop === "ending") { dispatch(setEndingDateAction({ payload: event.target.value })) }
+    else if (prop==="Country"){dispatch(setCountry({payload:event.target.value}))}
+    else if (prop==="City"){dispatch(setCity({payload:event.target.value}))}
+    else if (prop==="RegistrationNumber"){dispatch(setRegistrationNumber({payload:event.target.value}))}
+    else if (prop==="Address"){dispatch(setAddress({payload:event.target.value}))}
     else { dispatch(setAmountAction({ payload: event.target.value })) }
   };
 
@@ -225,6 +234,8 @@ export default function InputAdornments() {
                         shrink: true,
                       }} />
                   </div>
+                  <br/>
+                  <br/>
                   <div>
                     <TextField
                       id="ending"
@@ -256,8 +267,7 @@ export default function InputAdornments() {
                     <br />
                     <div class="ui form">
                       <div class="field">
-                        
-                        <select  className="ui search dropdown">
+                        <select  className="ui search dropdown" onChange={handleChange("Country")}>
                           <option value="">Select Country</option>
                           <option value="AF">Afghanistan</option>
                           <option value="AX">Åland Islands</option>
@@ -512,13 +522,13 @@ export default function InputAdornments() {
                       </div>
                     </div>
                     </div>
-
                     <div>
                     <OutlinedInput
                       id="City"
                       name='City'
-                      value=""
+                      value={values.City}
                       className={classes.amount}
+                      onChange ={handleChange('City')}
                       endAdornment={<InputAdornment position="end">City</InputAdornment>}
                       aria-describedby="outlined-weight-helper-text"
                       inputProps={{
@@ -526,8 +536,38 @@ export default function InputAdornments() {
                       }}
                       labelWidth={0}
                     />
+                    <br />
+                    <br />
+                    <OutlinedInput
+                      id="RegistrationNumber"
+                      name='RegistrationNumber'
+                      value={classes.RegistrationNumber}
+                      className={classes.amount}
+                      onChange ={handleChange('RegistrationNumber')}
+                      endAdornment={<InputAdornment position="end">RegistrationNumber</InputAdornment>}
+                      aria-describedby="outlined-weight-helper-text"
+                      inputProps={{
+                        'aria-label': 'Registration Number',
+                      }}
+                      labelWidth={0}
+                    />
+                    <br/>
+                    <br/>
+                    
+                    <OutlinedInput
+                      id="Address"
+                      name="Address"
+                      value={classes.Address}
+                      className={classes.amount}
+                      onChange={handleChange('Address')}
+                      endAdornment={<InputAdornment position="end">Address</InputAdornment>}
+                      aria-describedby="outlined-weight-helper-text"
+                      inputProps={{
+                        'aria-label': 'Address',
+                      }}
+                      labelWidth={0}
+                    />
                     </div>
-                  
                 </div>
                 <FormHelperText id="outlined-weight-helper-text">Contract Request</FormHelperText>
                 <IconButton
