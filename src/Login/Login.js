@@ -1,4 +1,7 @@
 import React from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import PublishIcon from '@material-ui/icons/Publish';
+import { Typography } from '@material-ui/core';
 import {
   MDBBtn,
   MDBContainer,
@@ -52,7 +55,15 @@ function Login() {
 
               
 
-              <MDBBtn className='w-100 mb-4' size='md' onClick={HandleSubmit}>sign up</MDBBtn>
+              <IconButton
+                  edge="start"
+                  
+                  onClick={HandleSubmit}
+                  color="inherit"
+                  aria-label="open drawer"
+                >
+                  <PublishIcon style={{ height: "30px", width: "20px", }} /><Typography variant="overline">log In</Typography>
+                </IconButton>
 
             </MDBCardBody>
           </MDBCard>

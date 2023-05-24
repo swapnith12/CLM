@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk, createAction } from "@reduxjs/toolkit";
 
-
+let instanceID
 export const StartProcess = createAsyncThunk("StartProcess", async (values) => {
   const requestOptions = {
     method: "POST",
@@ -12,9 +12,17 @@ export const StartProcess = createAsyncThunk("StartProcess", async (values) => {
   };
   const response = await fetch("/engine-rest/process-definition/key/Start/start", requestOptions);
   const result = await response.json();
+  console.log(result)
+  console.log(result.id)
+  instanceID=result.id
   return result;
 });
-
+export const FetchProcessVaribles = createAsyncThunk("FetchProcessVaribles", async (instanceID1) => {
+  const response = await fetch(`/engine-rest/process-instance/${instanceID1}/variables`)
+  const result = await response.json();
+  console.log("Process Varibles " + result)
+  return result
+})
 export const CompleteTask = createAsyncThunk("CompleteTask", async (taskId, values) => {
   const requestOptions = {
     method: "POST",
@@ -99,7 +107,9 @@ const start = createSlice({
     City:'',
     RegistrationNumber:'',
     Address:'',
-    appNo:null
+    appNo:null,
+    ProcessVaribles:'',
+    instanceID:''
   },
   extraReducers: (builder) => {
     builder.addCase(StartProcess.pending, (state, action) => {
@@ -110,6 +120,17 @@ const start = createSlice({
       state.data = action.payload;
     })
     builder.addCase(StartProcess.rejected, (state, action) => {
+      console.log("error", action.payload)
+      state.isError = true;
+    })
+    builder.addCase(FetchProcessVaribles.pending, (state, action) => {
+      state.isloading = true;
+    });
+    builder.addCase(FetchProcessVaribles.fulfilled, (state, action) => {
+      state.isloading = false;
+      state.ProcessVaribles = action.payload;
+    })
+    builder.addCase(FetchProcessVaribles.rejected, (state, action) => {
       console.log("error", action.payload)
       state.isError = true;
     })

@@ -21,7 +21,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import PublishIcon from '@material-ui/icons/Publish';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import { StartProcess, setAmountAction, setAppNo, setClientNameAction, setCreateDateAction, setEndingDateAction, setSample, setVendorNameAction,setCountry,setCity,setRegistrationNumber,setAddress } from '../redux/slice/start';
+import { StartProcess, setAmountAction, setAppNo, setClientNameAction, setCreateDateAction, setEndingDateAction, setSample, setVendorNameAction,setCountry,setCity,setRegistrationNumber,setAddress,FetchProcessVaribles } from '../redux/slice/start';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -84,6 +84,7 @@ export default function InputAdornments() {
   const [selectedOption, setSelectedOption] = useState(null);
   const formKey = useSelector((state) => state.start.FromKey);
   const [submitted, setSubmitted] = useState(false)
+  const instanceID=useSelector((state=>state.start.instanceID))
   const classes = useStyles();
   const dispatch = useDispatch()
   const RandomNumber = () => {
@@ -172,15 +173,18 @@ export default function InputAdornments() {
       'businessKey': 'CLM'
     }
   }
-
-
-  const HandleSubmit = (e) => {
-    e.preventDefault()
-    const valuess = getBody(values)
-    dispatch(StartProcess(valuess))
-    setSubmitted(true)
-  }
-
+  const sum=()=>{
+    dispatch(FetchProcessVaribles(instanceID))
+   }
+  
+    const HandleSubmit = (e) => {
+      e.preventDefault()
+      const valuess = getBody(values)
+      dispatch(StartProcess(valuess))
+      sum()
+     
+      setSubmitted(true)
+    }
   const Form = () => {
     return (
       <div className={classes.root}>
