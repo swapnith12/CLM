@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import PublishIcon from '@material-ui/icons/Publish';
 import { Typography } from '@material-ui/core';
-
 import {
   MDBBtn,
   MDBContainer,
@@ -15,12 +14,43 @@ import {
   MDBIcon
 }
 from 'mdb-react-ui-kit';
+import creds from '../LOGIN.json'
+import { useNavigate  } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+import { red } from '@material-ui/core/colors';
 
-const HandleSubmit = (e)=>{
-    e.preventDefault()
-}
+const useStyles = makeStyles((theme) => ({
+  root: {
+    color:"#b71c1c"
+  },
+}))
+
+
+const usersname = creds.map(item=>item.user)
+const password = creds.map(item=>item.password)
 
 function Login() {
+  console.log(usersname)
+  console.log(password)
+  const classes = useStyles()
+  const navigate = useNavigate();
+  const [values, setValues] = React.useState({
+    userName:'',
+    passWord:''
+  });
+  const [worngCreds , setWrongCreds] = useState(false)
+  const HandleSubmit = (e)=>{
+    e.preventDefault()
+    if(usersname.includes(values.userName) && password.includes(values.passWord)){
+    navigate("/")
+    }
+    else{
+      setWrongCreds(true)
+    }
+} 
+  const handleChange = (prop) => (event) =>{
+    setValues({ ...values, [prop]: event.target.value });
+  }
   return (
     <MDBContainer fluid >
 
@@ -46,16 +76,14 @@ function Login() {
 
               <MDBRow>
                 <MDBCol col='6'>
-                  <MDBInput wrapperClass='mb-4' label='User name' id='form1' type='text'/>
+                  <MDBInput wrapperClass='mb-4' label='User name' id='form1' type='text' onChange={handleChange("userName")}/>
                 </MDBCol>
 
                 <MDBCol col='6'>
-                  <MDBInput wrapperClass='mb-4' label='password' id='form1' type='password'/>
+                  <MDBInput wrapperClass='mb-4' label='password' id='form1' type='password' onChange={handleChange("passWord")}/>
                 </MDBCol>
               </MDBRow>
-
-              
-
+              {worngCreds?<p className={classes.root}>Wrong Credentials</p>:''}
               <IconButton
                   edge="start"
                   

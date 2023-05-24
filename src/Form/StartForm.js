@@ -21,7 +21,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import PublishIcon from '@material-ui/icons/Publish';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import { StartProcess, setAmountAction, setAppNo, setClientNameAction, setCreateDateAction, setEndingDateAction, setSample, setVendorNameAction,setCountry,setCity,setRegistrationNumber,setAddress,FetchProcessVaribles } from '../redux/slice/start';
+import { StartProcess, setAmountAction, setAppNo, setClientNameAction, setCreateDateAction, setEndingDateAction, setSample, setVendorNameAction,setCountry,setCity,setRegistrationNumber,setAddress } from '../redux/slice/start';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -84,7 +84,6 @@ export default function InputAdornments() {
   const [selectedOption, setSelectedOption] = useState(null);
   const formKey = useSelector((state) => state.start.FromKey);
   const [submitted, setSubmitted] = useState(false)
-  const instanceID=useSelector((state=>state.start.instanceID))
   const appRef = useSelector((state)=>state.start.appNo)
   const classes = useStyles();
   const dispatch = useDispatch()
@@ -179,18 +178,24 @@ export default function InputAdornments() {
       'businessKey': 'CLM'
     }
   }
-  const sum=async ()=>{
-    await dispatch(FetchProcessVaribles(instanceID))
-   }
+
   
-    const HandleSubmit = async (e) => {
-      e.preventDefault()
-      const valuess = getBody(values)
-      await dispatch(StartProcess(valuess))
-      sum()
-     
-      setSubmitted(true)
-    }
+   const HandleSubmit = async (e) => {
+    e.preventDefault();
+    const valuess = getBody(values);
+    
+    await new Promise((resolve, reject) => {
+      dispatch(StartProcess(valuess))
+        .then(() => {
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+
+    setSubmitted(true);
+  };
   const Form = () => {
     return (
       <div className={classes.root}>

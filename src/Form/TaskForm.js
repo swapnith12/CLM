@@ -59,6 +59,7 @@ export default function InputAdornments({ taskId,ChangeCount }) {
   const [values, setValues] = React.useState({
     Client: clientName,
     Vendor: vendorName,
+    CommentsVM:''
   });
 
   {/*
@@ -158,82 +159,7 @@ const HandleSubmit = (e,taskId)=>{
             <button type='submit'>Approve</button>
           </FormControl>
           </form>
-          {/*<FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={handleChange('password')}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            }
-            labelWidth={70}
-          />
-          </FormControl>*/}
-          {/*<FormControl fullWidth className={classes.margin} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-amount"
-              value={values.amount}
-              onChange={handleChange('amount')}
-              startAdornment={<InputAdornment position="start">$</InputAdornment>}
-              labelWidth={60}
-            />
-          </FormControl>
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Contract Type</FormLabel>
-            <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChangeRadio}>
-              <FormControlLabel value="Employee" control={<Radio />} label="Employee" />
-              <FormControlLabel value="MSA" control={<Radio />} label="MSA" />
-              <FormControlLabel value="Loan" control={<Radio />} label="Loan" />
-              <FormControlLabel value="Shell" disabled control={<Radio />} label="(Shell option)" />
-            </RadioGroup>
-          </FormControl>
-        </div>
-        <div className={classes.content}>
-          <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-            <OutlinedInput
-              id="Contract Id"
-              value=""
-              onChange={handleChange('weight')}
-              defaultValue="C-333"
-              endAdornment={<InputAdornment position="end">Contract Id</InputAdornment>}
-              aria-describedby="outlined-weight-helper-text"
-              inputProps={{
-                'aria-label': 'Contract Id',
-              }}
-              labelWidth={0}
-            />
-          </FormControl>
-          <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-            <TextField
-              id="datetime-local"
-              label="Initiate Date"
-              type="datetime-local"
-              defaultValue="2017-05-24T10:30"
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </FormControl>
-          <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-            <FormLabel component="legend">Status Type</FormLabel>
-            <RadioGroup aria-label="status" name="status" value={value} onChange={handleChangeRadio}>
-              <FormControlLabel value="New" control={<Radio />} label="New" />
-              <FormControlLabel value="Existing" control={<Radio />} label="Existing" />
-            </RadioGroup>
-          </FormControl> */}
+
         </div>
       </div>
     </div>

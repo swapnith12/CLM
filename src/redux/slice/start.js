@@ -13,14 +13,14 @@ export const StartProcess = createAsyncThunk("StartProcess", async (values) => {
   const response = await fetch("/engine-rest/process-definition/key/Start/start", requestOptions);
   const result = await response.json();
   console.log(result)
-  console.log(result.id)
   instanceID=result.id
+  console.log("instanceId"+instanceID)
   return result;
 });
 export const FetchProcessVaribles = createAsyncThunk("FetchProcessVaribles", async (instanceID1) => {
   const response = await fetch(`/engine-rest/process-instance/${instanceID1}/variables`)
   const result = await response.json();
-  console.log("Process Varibles " + result)
+  console.log("Process Varibles " + {result})
   return result
 })
 export const CompleteTask = createAsyncThunk("CompleteTask", async (taskId, values) => {
@@ -118,6 +118,7 @@ const start = createSlice({
     builder.addCase(StartProcess.fulfilled, (state, action) => {
       state.isloading = false;
       state.data = action.payload;
+      state.instanceID=action.payload.id
     })
     builder.addCase(StartProcess.rejected, (state, action) => {
       console.log("error", action.payload)
