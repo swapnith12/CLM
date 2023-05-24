@@ -1,0 +1,15 @@
+[
+    {
+        "user":"Admin",
+        "password":"truviq7"
+    },
+    {
+        "user":"VManager",
+        "password":"truviq7"
+    },
+    {
+        "user":"FManager",
+        "password":"truviq7"
+    }
+
+]

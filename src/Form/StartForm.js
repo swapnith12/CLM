@@ -85,12 +85,10 @@ export default function InputAdornments() {
   const formKey = useSelector((state) => state.start.FromKey);
   const [submitted, setSubmitted] = useState(false)
   const instanceID=useSelector((state=>state.start.instanceID))
+  const appRef = useSelector((state)=>state.start.appNo)
   const classes = useStyles();
   const dispatch = useDispatch()
-  const RandomNumber = () => {
-    const randomNumber = Math.floor(Math.random() * 10000) + 1;
-    return randomNumber
-  }
+
   const [values, setValues] = React.useState({
     Client: '',
     Vendor: '',
@@ -147,9 +145,7 @@ export default function InputAdornments() {
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
     if (prop === "Client") {
-      id = event.target.value.toLowerCase() == "truviq" ? "C-" + RandomNumber() : "V-" + RandomNumber()
-      setValues(values.AppNo = id)
-      dispatch(setAppNo({ payload: values.AppNo }))
+      
       dispatch(setClientNameAction({ payload: event.target.value }))
     } else if (prop === "Vendor") {
 
@@ -163,7 +159,17 @@ export default function InputAdornments() {
     else { dispatch(setAmountAction({ payload: event.target.value })) }
   };
 
-  const getBody = (values) => {
+  const getBody = async (values) => {
+    if (values.Client.toLowerCase()==="truviq"){
+      const id = "C-" + (Math.floor(Math.random() * 10000) + 1);
+      await setValues({ ...values, AppNo: id })
+      await dispatch(setAppNo(id))
+    }
+    else{
+      const id = "V-" + (Math.floor(Math.random() * 10000) + 1);
+      await setValues({ ...values, AppNo: id })
+      await dispatch(setAppNo(id))
+    }
     let variables = {}
     Object.keys(values).forEach((item) => {
       variables[item] = { 'value': values[item] }
@@ -173,14 +179,14 @@ export default function InputAdornments() {
       'businessKey': 'CLM'
     }
   }
-  const sum=()=>{
-    dispatch(FetchProcessVaribles(instanceID))
+  const sum=async ()=>{
+    await dispatch(FetchProcessVaribles(instanceID))
    }
   
-    const HandleSubmit = (e) => {
+    const HandleSubmit = async (e) => {
       e.preventDefault()
       const valuess = getBody(values)
-      dispatch(StartProcess(valuess))
+      await dispatch(StartProcess(valuess))
       sum()
      
       setSubmitted(true)
@@ -598,7 +604,7 @@ export default function InputAdornments() {
       } else {
         return (<>
           <Typography variant="h4">{values.Client}-Thanks For Choosing Us!</Typography>
-          <Typography variant='h4'>Application Id:{id}</Typography>
+          <Typography variant='h4'>Application Id:{appRef}</Typography>
           <Typography variant="h6">We will process your request</Typography>
         </>)
       }
