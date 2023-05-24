@@ -159,16 +159,16 @@ export default function InputAdornments() {
     else { dispatch(setAmountAction({ payload: event.target.value })) }
   };
 
-  const getBody = async (values) => {
+  const getBody = (values) => {
     if (values.Client.toLowerCase()==="truviq"){
       const id = "C-" + (Math.floor(Math.random() * 10000) + 1);
-      await setValues({ ...values, AppNo: id })
-      await dispatch(setAppNo(id))
+      setValues({ ...values, AppNo: id })
+       dispatch(setAppNo(id))
     }
     else{
       const id = "V-" + (Math.floor(Math.random() * 10000) + 1);
-      await setValues({ ...values, AppNo: id })
-      await dispatch(setAppNo(id))
+      setValues({ ...values, AppNo: id })
+       dispatch(setAppNo(id))
     }
     let variables = {}
     Object.keys(values).forEach((item) => {
