@@ -429,7 +429,7 @@ const App=(props)=> {
               color="inherit"
               className={classes.menuButton}
             >
-              <AccountCircle style={{height:"30px",width:"20px"}} />&nbsp;<Typography variant="overline">Profile</Typography>
+              <AccountCircle style={{height:"30px",width:"20px"}} />&nbsp;<Typography variant="overline">{`${user}`}</Typography>
             </IconButton>
             </div>
             <div>

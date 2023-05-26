@@ -24,11 +24,16 @@ const useStyles = makeStyles((theme) => ({
       },
 }))
 
+
+
 function Root() {
+    let Profile
     const classes = useStyles()
     const dispatch = useDispatch()
 
     const login = (value)=>{
+      Profile=value
+      console.log(Profile)
       dispatch(setLoggedUser(value))
     }
 
@@ -39,7 +44,7 @@ function Root() {
   return (
     <Router>
     <div className={classes.container}>
-        <App className={classes.selfContained} Logout={Logout}/>
+        <App className={classes.selfContained} Logout={Logout} Profile={Profile}/>
         <div>
                 <Routes>
                     <Route path="/Login" exact element={<Login login={login} />} />
