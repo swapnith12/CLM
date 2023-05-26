@@ -122,7 +122,9 @@ const handleChange = (prop) => (event) => {
     //dispatch(StartProcess(values))
     console.log(taskId)
     const valuess = getBody(values)
-    dispatch(CompleteTask(taskId, valuess))
+    console.log("this")
+    console.log(valuess)
+    dispatch(CompleteTask(taskId, values))
     ChangeCount()
   }
 

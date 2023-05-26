@@ -11,11 +11,19 @@ function ReviewTasks() {
   const appNo = useSelector(state=>state.start.appNo.payload)
   const [finished,setFinished] = useState(false)
   useEffect(() => {
-    dispatch(FetchTasks());
+    dispatch(FetchTasks())
+    .then(() => {
+      console.log("Fetched tasks")
+      return dispatch(FetchProcessVaribles(id));
+    })
+    .then(() => {
+     console.log("Fetched Process Variables")
+    })
+    .catch((error) => {
+      console.log("error"+error)
+    });
   }, [count]);
-  useEffect(() => {
-    dispatch(FetchProcessVaribles(id))
-  }, [count]);
+  
   const ChangeCount = ()=>{
     if(count<2){
       setCount(count+1)

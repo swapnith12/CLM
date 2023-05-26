@@ -27,6 +27,7 @@ export const CompleteTask = createAsyncThunk("CompleteTask", async (taskId, valu
   const requestOptions = {
     method: "POST",
     headers: {
+      'Accept': 'application/json',
       "Content-Type": "application/json"
     },
     body: JSON.stringify(values)

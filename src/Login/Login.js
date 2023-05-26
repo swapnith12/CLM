@@ -31,8 +31,6 @@ const password = creds.map(item=>item.password)
 
 function Login(props) {
   const {login} = props
-  console.log(usersname)
-  console.log(password)
   const classes = useStyles()
   const navigate = useNavigate();
   const [values, setValues] = React.useState({
