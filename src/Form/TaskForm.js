@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function InputAdornments({ taskId, ChangeCount }) {
+export default function InputAdornments({ taskId, ChangeCount ,taskName}) {
   const dispatch = useDispatch()
   const clientName = useSelector((state) => state.start.clientName.payload)
   console.log(clientName)
@@ -74,9 +74,8 @@ export default function InputAdornments({ taskId, ChangeCount }) {
   const amount = useSelector((state) => state.start.amount.payload)
   const classes = useStyles();
   const [values, setValues] = React.useState({
-    Client: clientName,
-    Vendor: vendorName,
-    CommentsVM: ''
+    Comments: '',
+    approval:''
   });
 
   {/*
@@ -109,6 +108,10 @@ const handleChange = (prop) => (event) => {
       'variables': variables,
       'businessKey': 'CLM'
     }
+  }
+
+  const handleChange = (e)=>{
+    setValues({...values,Comments:e.target.value})
   }
 
 
@@ -147,45 +150,16 @@ const handleChange = (prop) => (event) => {
                     <br/>
                   </div>
                   ))}
+                  <TextField
+                    
+                    id="outlined-disabled"
+                    className={classes.fields}
+                    label={`${taskName} Comments`}
+                    defaultValue={values.comments}
+                    onChange={handleChange}
+                    variant="outlined"
+                    />
                 </div>
-
-                {/*<TextField
-          disabled
-          id="outlined-disabled"
-          label="Disabled"
-          defaultValue={clientName}
-          variant="outlined"
-        />
-            <br/>
-            <TextField
-          disabled
-          id="outlined-disabled"
-          label="Disabled"
-          defaultValue={vendorName}
-          variant="outlined"
-        /><br/>
-         <TextField
-          disabled
-          id="outlined-disabled"
-          label="Disabled"
-          defaultValue={creation}
-          variant="outlined"
-        /><br/>
-         <TextField
-          disabled
-          id="outlined-disabled"
-          label="Disabled"
-          defaultValue={ending}
-          variant="outlined"
-        /><br/>
-         <TextField
-          disabled
-          id="outlined-disabled"
-          label="Disabled"
-          defaultValue={amount}
-          variant="outlined"
-        /> */}
-
                 <FormHelperText id="outlined-weight-helper-text">Vendor Review</FormHelperText>
 
                 <button type='submit'>Approve</button>

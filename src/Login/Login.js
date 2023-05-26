@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
 const usersname = creds.map(item=>item.user)
 const password = creds.map(item=>item.password)
 
-function Login() {
+function Login(props) {
+  const {login} = props
   console.log(usersname)
   console.log(password)
   const classes = useStyles()
@@ -42,6 +43,7 @@ function Login() {
   const HandleSubmit = (e)=>{
     e.preventDefault()
     if(usersname.includes(values.userName) && password.includes(values.passWord)){
+    login(values.userName)
     navigate("/")
     }
     else{

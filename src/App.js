@@ -25,6 +25,7 @@ import { Report } from '@material-ui/icons';
 import HelpIcon from '@material-ui/icons/Help';
 
 import { useNavigate  } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 const DrawerWidth = "245px"
 
@@ -128,7 +129,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const App=()=> {
+const App=(props)=> {
+  const {Logout} = props
+  const user = useSelector((state)=>state.start.loggedUser)
   const classes = useStyles();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -158,6 +161,15 @@ const App=()=> {
   }
   const onClickTasks = ()=>{
     navigate("/review")
+  }
+
+  const handleLogout = ()=>{
+    Logout()
+    navigate("/")
+  }
+
+  const HandleLogIN = ()=>{
+    navigate("/Login")
   }
 
   const handleMobileMenuOpen = (event) => {
@@ -235,6 +247,8 @@ const App=()=> {
   );
 
   return (
+    <>
+    {user==="Admin" || user===""?
     <div  className={classes.grow1} >
       <AppBar position="sticky" className={classes.backgroundColor}>
         <Toolbar className={classes.backgroundColor}>
@@ -265,15 +279,7 @@ const App=()=> {
               >
               <RecentActorsIcon style={{height:"30px",width:"20px",}} /><Typography variant="overline">Contracts</Typography>
           </IconButton>
-          <IconButton
-               edge="start"
-               className={classes.menuButton}
-               onClick={onClickTasks}
-               color="inherit"
-               aria-label="open drawer"
-              >
-              <AssessmentIcon style={{height:"30px",width:"20px",}} /><Typography variant="overline">Tasks</Typography>
-          </IconButton>
+          
           <IconButton
                edge="start"
                className={classes.menuButton}
@@ -325,11 +331,11 @@ const App=()=> {
                 aria-label="account of current user"
                 aria-controls={menuId}
                 aria-haspopup="true"
-                
+                onClick={HandleLogIN}
                 color="inherit"
                 className={classes.menuButton}
               >
-                <ExitToAppIcon style={{height:"30px",width:"20px"}} />&nbsp;<Typography variant="overline">Log Out</Typography>
+                <ExitToAppIcon style={{height:"30px",width:"20px"}} />&nbsp;<Typography variant="overline">LogIn As @team</Typography>
               </IconButton>
             </div>
           </div>
@@ -350,6 +356,114 @@ const App=()=> {
       {renderMobileMenu}
       {renderMenu}
     </div>
+    :<div  className={classes.grow1} >
+    <AppBar position="sticky" className={classes.backgroundColor}>
+      <Toolbar className={classes.backgroundColor}>
+        <IconButton
+          edge="start"
+          className={classes.menuButton}
+          color="inherit"
+          aria-label="open drawer"
+        >
+          <img src={Logo} height={75} width={70} alt="Truviq" />
+        </IconButton>
+        <div style={{display:"flex",flexDirection:"column",alignContent:"flex-start"}}>
+        <IconButton
+             edge="start"
+             className={classes.menuButton}
+             onClick={onClickDashBoard}
+             color="inherit"
+             aria-label="open drawer"
+            >
+            <DashboardIcon style={{height:"30px",width:"20px",}} /><Typography variant="overline">DashBoard</Typography>
+        </IconButton>
+       
+        <IconButton
+             edge="start"
+             className={classes.menuButton}
+             onClick={onClickTasks}
+             color="inherit"
+             aria-label="open drawer"
+            >
+            <AssessmentIcon style={{height:"30px",width:"20px",}} /><Typography variant="overline">Tasks</Typography>
+        </IconButton>
+        <IconButton
+             edge="start"
+             className={classes.menuButton}
+             color="inherit"
+             aria-label="open drawer"
+            >
+            <Report style={{height:"30px",width:"20px",}} /><Typography variant="overline">Report</Typography>
+        </IconButton>
+        <IconButton
+             edge="start"
+             className={classes.menuButton}
+             color="inherit"
+             aria-label="open drawer"
+            >
+            <HelpIcon style={{height:"30px",width:"20px",}} /><Typography variant="overline">Help</Typography>
+        </IconButton>
+        </div>
+        <div className={classes.grow}/>
+        <div className={classes.sectionDesktop} >
+            <div>
+            <IconButton
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+              className={classes.menuButton}
+            >
+            <SettingsIcon style={{height:"30px",width:"20px",}} />&nbsp;<Typography variant="overline">Settings</Typography>
+            </IconButton>
+            </div>
+            <div>
+            <IconButton
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+              className={classes.menuButton}
+            >
+              <AccountCircle style={{height:"30px",width:"20px"}} />&nbsp;<Typography variant="overline">Profile</Typography>
+            </IconButton>
+            </div>
+            <div>
+            <IconButton
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleLogout}
+              color="inherit"
+              className={classes.menuButton}
+            >
+              <ExitToAppIcon style={{height:"30px",width:"20px"}} />&nbsp;<Typography variant="overline">Log Out</Typography>
+            </IconButton>
+          </div>
+        </div>
+        <div className={classes.sectionMobile}>
+          <IconButton
+            aria-label="show more"
+            aria-controls={mobileMenuId}
+            aria-haspopup="true"
+            onClick={handleMobileMenuOpen}
+            color="inherit"
+
+          >
+            <MoreIcon />
+          </IconButton>
+        </div>
+      </Toolbar>
+    </AppBar>
+    {renderMobileMenu}
+    {renderMenu}
+  </div>}
+    </>
   );
 }
 

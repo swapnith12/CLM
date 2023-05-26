@@ -34,11 +34,11 @@ function ReviewTasks() {
 
   return (
     <div>
-      {finished?<Typography variant="h4">No Pending Tasks</Typography>:<div>
+      {finished || !listOfTasks || listOfTasks.length === 0?<Typography variant="h4">No Pending Tasks</Typography>:<div>
       <Typography variant="h4">{listOfTasks[0].name}</Typography><br />
       {/*<Typography variant="h6">Task Id: {taskId}</Typography>*/}
       <Typography variant="h6">Application Id:{appNo}</Typography><br />
-      <TaskForm taskId={taskId} ChangeCount={ChangeCount} /></div>}
+      <TaskForm taskName={listOfTasks[0].name} taskId={taskId} ChangeCount={ChangeCount} /></div>}
     </div>
   );
 }

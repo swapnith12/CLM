@@ -31,10 +31,12 @@ export const CompleteTask = createAsyncThunk("CompleteTask", async (taskId, valu
     },
     body: JSON.stringify(values)
   };
-  const response = await fetch(`/engine-rest/task/${taskId}/complete`, requestOptions);
+  const response = await fetch(`/engine-rest/task/${taskId}/submit-form`, requestOptions);
   const result = await response.json();
   return result;
 });
+
+//i have changed complete in url to submit-form
 
 export const GetForm = createAsyncThunk("FormKey", async () => {
   const response = await fetch("/engine-rest/process-definition/key/Start/startForm")
@@ -87,6 +89,11 @@ export const setRegistrationNumber = createAction("setRegistrationNumber",(paylo
 export const setAddress = createAction("setAddress",(payload)=>{
   return {payload}
 })
+export const setLoggedUser = createAction("setLoggedUser",(payload)=>{
+  console.log("triggered")
+  return {payload}
+})
+
 
 
 const start = createSlice({
@@ -107,9 +114,10 @@ const start = createSlice({
     City:'',
     RegistrationNumber:'',
     Address:'',
-    appNo:null,
+    appNo:'',
     ProcessVaribles:'',
-    instanceID:''
+    instanceID:'',
+    loggedUser:''
   },
   extraReducers: (builder) => {
     builder.addCase(StartProcess.pending, (state, action) => {
@@ -188,6 +196,9 @@ const start = createSlice({
     });
     builder.addCase(setAddress, (state, action) => {
       state.Address = action.payload;
+    });
+    builder.addCase(setLoggedUser, (state, action) => {
+      state.loggedUser = action.payload;
     });
 
     builder.addCase(CompleteTask.pending, (state, action) => {
